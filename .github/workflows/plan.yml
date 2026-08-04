@@ -1,4 +1,4 @@
-name: Terraform Apply
+name: Terraform Plan
 
 on:
   push:
@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  apply:
+  plan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,5 +28,13 @@ jobs:
       - run: terraform init
         working-directory: infra
 
-      - run: terraform apply -auto-approve
+
+      - run: terraform plan
         working-directory: infra
+        env:
+          SNOWFLAKE_ORGANIZATION_NAME: ${{ secrets.SNOWFLAKE_ORGANIZATION_NAME }}
+          SNOWFLAKE_ACCOUNT_NAME: ${{ secrets.SNOWFLAKE_ACCOUNT_NAME }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+          SNOWFLAKE_AUTHENTICATOR: SNOWFLAKE_JWT
+          SNOWFLAKE_ROLE: TF_DEPLOY

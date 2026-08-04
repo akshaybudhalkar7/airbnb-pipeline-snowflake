@@ -1,19 +1,17 @@
-name: Terraform Apply
+name: Terraform
 
 on:
   push:
-    branches:
-      - 'initial-setup'
+    branches: ['initial-setup']
   pull_request:
     branches: [main]
-
 
 permissions:
   id-token: write
   contents: read
 
 jobs:
-  apply:
+  terraform:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,5 +26,11 @@ jobs:
       - run: terraform init
         working-directory: infra
 
-      - run: terraform apply -auto-approve
+      - run: terraform plan -out=tfplan
         working-directory: infra
+
+      - run: terraform apply tfplan
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        working-directory: infra
+
+        

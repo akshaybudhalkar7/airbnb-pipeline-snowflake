@@ -16,4 +16,11 @@ terraform {
   }
 }
 
-provider "snowflake" {}
+provider "snowflake" {
+  organization_name          = "XJVCLEX"
+  account_name               = "NNC43628"
+  user                       = "TF_SVC"
+  role                       = "TF_DEPLOY"
+  authenticator              = "WORKLOAD_IDENTITY"
+  workload_identity_provider = "AWS"
+}

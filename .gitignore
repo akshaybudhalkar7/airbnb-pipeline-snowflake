@@ -223,6 +223,3 @@ __marimo__/
 *.tfstate.*
 *.tfvars
 .terraform.lock.hcl.bak
-
-.github/workflows/plan.yml
-.github/workflows/terraform.yml

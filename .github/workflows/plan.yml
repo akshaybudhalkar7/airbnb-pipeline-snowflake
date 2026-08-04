@@ -23,5 +23,12 @@ jobs:
           role-to-assume: arn:aws:iam::656559336744:role/airbnb-pipeline-snowflake-github-actions
           aws-region: us-east-1
 
-      - run: aws sts get-caller-identity
-      - run: aws s3 ls airbnb-pipeline-tf-656559336744-us-east-1
+    #   - run: aws sts get-caller-identity
+    #   - run: aws s3 ls airbnb-pipeline-tf-656559336744-us-east-1
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - run: terraform init
+        working-directory: infra
+
+        

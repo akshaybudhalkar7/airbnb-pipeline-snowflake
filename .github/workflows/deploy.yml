@@ -57,6 +57,8 @@ jobs:
 
       - name: Run migrations
         if: github.event_name == 'push'
+        env:
+          SNOWFLAKE_WORKLOAD_IDENTITY_PROVIDER: AWS
         run: |
           schemachange deploy \
             -f migrations \

@@ -1,19 +1,17 @@
-name: Terraform Apply
+name: Snowflake Infra
 
 on:
   push:
-    branches:
-      - 'initial-setup'
+    branches: ['initial-setup']
   pull_request:
     branches: [main]
-
 
 permissions:
   id-token: write
   contents: read
 
 jobs:
-  apply:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,6 +19,7 @@ jobs:
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::656559336744:role/airbnb-pipeline-snowflake-github-actions
+          role-session-name: gha-${{ github.run_id }}
           aws-region: us-east-1
 
       - uses: hashicorp/setup-terraform@v3
@@ -28,5 +27,39 @@ jobs:
       - run: terraform init
         working-directory: infra
 
-      - run: terraform apply -auto-approve
+      - run: terraform plan -out=tfplan
         working-directory: infra
+
+      - run: terraform apply tfplan
+        if: github.event_name == 'push'
+        working-directory: infra
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install schemachange
+        run: pip install schemachange
+
+      - name: Write connections file
+        if: github.event_name == 'push'
+        run: |
+          cat > connections.toml <<'EOF'
+          [tfsvc]
+          account = "XJVCLEX-NNC43628"
+          user = "TF_SVC"
+          role = "TF_DEPLOY"
+          warehouse = "TRANSFORM_WH"
+          authenticator = "WORKLOAD_IDENTITY"
+          workload_identity_provider = "AWS"
+          EOF
+          chmod 600 connections.toml
+
+      - name: Run migrations
+        if: github.event_name == 'push'
+        run: |
+          schemachange deploy \
+            -f migrations \
+            --connections-file-path connections.toml \
+            --connection-name tfsvc \
+            --change-history-table RAW_DB.SCHEMACHANGE.CHANGE_HISTORY

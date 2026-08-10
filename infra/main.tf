@@ -10,3 +10,5 @@ resource "snowflake_database" "raw" {
   name    = "RAW_DB"
   comment = "Managed by Terraform"
 }
+
+

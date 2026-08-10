@@ -64,4 +64,5 @@ jobs:
             -f migrations \
             --connections-file-path connections.toml \
             --connection-name tfsvc \
+            --create-change-history-table \
             --change-history-table RAW_DB.SCHEMACHANGE.CHANGE_HISTORY

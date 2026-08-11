@@ -1,0 +1,17 @@
+CREATE STAGE IF NOT EXISTS RAW_DB.LANDING.STG_HOSTS
+  STORAGE_INTEGRATION = S3_RAW_INT
+  URL = 's3://airbnb-pipeline-data-lake-656559336744-us-east-1/raw/hosts/'
+  FILE_FORMAT = RAW_DB.LANDING.FF_CSV
+  COMMENT = 'Managed by schemachange';
+
+CREATE STAGE IF NOT EXISTS RAW_DB.LANDING.STG_LISTINGS
+  STORAGE_INTEGRATION = S3_RAW_INT
+  URL = 's3://airbnb-pipeline-data-lake-656559336744-us-east-1/raw/listings/'
+  FILE_FORMAT = RAW_DB.LANDING.FF_CSV
+  COMMENT = 'Managed by schemachange';
+
+CREATE STAGE IF NOT EXISTS RAW_DB.LANDING.STG_BOOKINGS
+  STORAGE_INTEGRATION = S3_RAW_INT
+  URL = 's3://airbnb-pipeline-data-lake-656559336744-us-east-1/raw/bookings/'
+  FILE_FORMAT = RAW_DB.LANDING.FF_CSV
+  COMMENT = 'Managed by schemachange';

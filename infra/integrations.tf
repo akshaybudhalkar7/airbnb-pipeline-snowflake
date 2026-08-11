@@ -1,4 +1,4 @@
-resource "snowflake_storage_integration" "s3_raw" {
+resource "snowflake_storage_integration_aws" "s3_raw" {
   name                      = "S3_RAW_INT"
   type                      = "EXTERNAL_STAGE"
   storage_provider          = "S3"

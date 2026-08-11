@@ -23,4 +23,8 @@ provider "snowflake" {
   role                       = "TF_DEPLOY"
   authenticator              = "WORKLOAD_IDENTITY"
   workload_identity_provider = "AWS"
+
+  preview_features_enabled = [
+    "snowflake_storage_integration_aws_resource",
+  ]
 }

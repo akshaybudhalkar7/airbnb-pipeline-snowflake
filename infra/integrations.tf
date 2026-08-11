@@ -1,6 +1,5 @@
 resource "snowflake_storage_integration_aws" "s3_raw" {
   name                      = "S3_RAW_INT"
-  type                      = "EXTERNAL_STAGE"
   storage_provider          = "S3"
   enabled                   = "true"
   storage_aws_role_arn      = "arn:aws:iam::656559336744:role/airbnb-pipeline-snowflake-s3-access"

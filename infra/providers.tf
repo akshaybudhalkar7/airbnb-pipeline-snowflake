@@ -23,3 +23,4 @@ provider "snowflake" {
   role                       = "TF_DEPLOY"
   authenticator              = "WORKLOAD_IDENTITY"
   workload_identity_provider = "AWS"
+}

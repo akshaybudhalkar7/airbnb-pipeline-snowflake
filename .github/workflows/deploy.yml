@@ -79,7 +79,13 @@ jobs:
           echo "::add-mask::$TOKEN"
           echo "SNOWFLAKE_WORKLOAD_IDENTITY_TOKEN=$TOKEN" >> $GITHUB_ENV
 
+      - name: Check token
+        if: github.event_name == 'push'
+        run: |
+          echo "token length: ${#SNOWFLAKE_WORKLOAD_IDENTITY_TOKEN}"
+
       - name: dbt debug
         if: github.event_name == 'push'
+        timeout-minutes: 3
         working-directory: transform
         run: dbt debug

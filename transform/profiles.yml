@@ -12,3 +12,4 @@ airbnb:
       threads: 8
       authenticator: workload_identity
       workload_identity_provider: OIDC
+      token: "{{ env_var('SNOWFLAKE_WORKLOAD_IDENTITY_TOKEN') }}"

@@ -1,0 +1,4 @@
+name: 'airbnb'
+version: '1.0.0'
+profile: 'airbnb'
+model-paths: ["models"]

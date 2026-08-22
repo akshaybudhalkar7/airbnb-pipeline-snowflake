@@ -1,0 +1,14 @@
+airbnb:
+  target: prod
+  outputs:
+    prod:
+      type: snowflake
+      account: XJVCLEX-NNC43628
+      user: DBT_SVC
+      role: DBT_ROLE
+      database: ANALYTICS_DB
+      warehouse: TRANSFORM_WH
+      schema: MARTS
+      threads: 8
+      authenticator: workload_identity
+      workload_identity_provider: OIDC

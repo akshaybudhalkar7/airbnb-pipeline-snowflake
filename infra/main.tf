@@ -12,3 +12,7 @@ resource "snowflake_database" "raw" {
 }
 
 
+resource "snowflake_database" "analytics" {
+  name    = "ANALYTICS_DB"
+  comment = "Managed by Terraform"
+}

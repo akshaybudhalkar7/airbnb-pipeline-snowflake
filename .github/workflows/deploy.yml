@@ -66,3 +66,20 @@ jobs:
             --connection-name tfsvc \
             --create-change-history-table \
             --change-history-table RAW_DB.SCHEMACHANGE.CHANGE_HISTORY
+
+      - name: Install dbt
+        run: pip install dbt-snowflake
+
+      - name: Get Snowflake OIDC token
+        if: github.event_name == 'push'
+        run: |
+          TOKEN=$(curl -sH "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=snowflakecomputing.com" \
+            | jq -r '.value')
+          echo "::add-mask::$TOKEN"
+          echo "SNOWFLAKE_WORKLOAD_IDENTITY_TOKEN=$TOKEN" >> $GITHUB_ENV
+
+      - name: dbt debug
+        if: github.event_name == 'push'
+        working-directory: transform
+        run: dbt debug

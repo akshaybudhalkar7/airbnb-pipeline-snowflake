@@ -89,3 +89,9 @@ jobs:
         timeout-minutes: 3
         working-directory: transform
         run: dbt debug
+
+      - name: dbt build
+        if: github.event_name == 'push'
+        timeout-minutes: 10
+        working-directory: transform
+        run: dbt build

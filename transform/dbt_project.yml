@@ -2,3 +2,15 @@ name: 'airbnb'
 version: '1.0.0'
 profile: 'airbnb'
 model-paths: ["models"]
+
+models:
+    airbnb:
+     bronze:
+       +materialized: incremental
+       +schema: bronze
+     silver:
+       +materialized: table
+       +schema: staging
+     gold:
+       +materialized: table
+       +schema: marts

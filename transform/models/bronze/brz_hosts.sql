@@ -4,7 +4,7 @@
 
 select * from {{source('raw','hosts')}}
 
-{% if {% if is_incremental() %}
+{% if is_incremental() %}
 where _load_ts > select max(load_ts) from {{ this }}
-{% endif %} %}
+{% endif %}
 

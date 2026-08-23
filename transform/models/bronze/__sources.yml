@@ -4,7 +4,7 @@ sources:
     - name: raw
       database: RAW_DB
       schema: LANDING
-      loaded_at_ts: _load_ts
+      loaded_at_field: _load_ts
       tables:
         - name: hosts
           description: "Airbnb host records, loaded by Snowpipe from S3."

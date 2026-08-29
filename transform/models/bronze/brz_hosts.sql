@@ -2,9 +2,9 @@
     unique_key = 'hosts_id'
 ) }}
 
-select * from {{source('raw','hosts')}}
+select * from {{ source('raw', 'hosts') }}
 
 {% if is_incremental() %}
-where _load_ts > select max(load_ts) from {{ this }}
+where _load_ts > (select max(_load_ts) from {{ this }})
 {% endif %}
 

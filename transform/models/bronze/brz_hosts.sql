@@ -1,5 +1,5 @@
 {{ config(
-    unique_key = 'hosts_id'
+    unique_key = 'host_id'
 ) }}
 
 select * from {{ source('raw', 'hosts') }}
